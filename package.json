@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "startOld": "ng serve",
-    "start": "node server.js",
+    "start": "npx serve -s dist/demo-angular -l ${PORT:-3000}",
     "buildOld": "ng build",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
