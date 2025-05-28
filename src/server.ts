@@ -1,5 +1,3 @@
-
-/*
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine, isMainModule } from '@angular/ssr/node';
 import express from 'express';
@@ -13,8 +11,6 @@ const indexHtml = join(serverDistFolder, 'index.server.html');
 
 const app = express();
 const commonEngine = new CommonEngine();
-
-* aqui termina/
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -31,8 +27,6 @@ const commonEngine = new CommonEngine();
 /**
  * Serve static files from /browser
  */
-
-/* NUEVO COMENTARIO
 app.get(
   '**',
   express.static(browserDistFolder, {
@@ -41,6 +35,9 @@ app.get(
   }),
 );
 
+/**
+ * Handle all other requests by rendering the Angular application.
+ */
 app.get('**', (req, res, next) => {
   const { protocol, originalUrl, baseUrl, headers } = req;
 
@@ -56,41 +53,15 @@ app.get('**', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-
-
+/**
+ * Start the server if this module is the main entry point.
+ * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
+ */
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server escuchando on http://localhost:${port}`);
   });
 }
 
 export default app;
-*/
-
-
-// configuración producción
-// @ts-nocheck
-
-const express = require('express');
-const path = require('path');
-
-const app = express();
-
-// Asegúrate de que el nombre coincida con el generado en el build
-const distFolder = path.join(__dirname, 'dist/demo-angular');
-
-app.use(express.static(distFolder));
-
-// Ruta para manejar cualquier URL y devolver index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(distFolder, 'index.html'));
-});
-
-// Puerto que proporciona Railway o 3000 por defecto
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Servidor escuchando en el puerto ${port}`);
-});
-
-
